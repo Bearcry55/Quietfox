@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quietfox</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4663e6 0%, #66408b 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        h1:hover {
+            transform: scale(1.05);
+        }
+
+        .search-box-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 20px;
+            outline: none;
+            border-radius: 50px;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .submit {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .submit:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        .response {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 1rem;
+        }
+
+        .fa-search {
+            font-size: 1.2rem;
+        }
+
+        /* 🔻 New styles for engine switcher */
+        .engine-switcher {
+            margin-bottom: 1.5rem;
+        }
+
+        .engine-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .engine-btn:hover,
+        .engine-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 onclick="animateTitle()">Quietfox Browser</h1>
+
+        
+        <!-- 🔻 Engine switcher UI -->
+        <div class="engine-switcher">
+            <button class="engine-btn active" data-engine="brave" onclick="selectEngine('brave')">Brave</button>
+            <button class="engine-btn" data-engine="duckduckgo" onclick="selectEngine('duckduckgo')">DuckDuckGo</button>
+            <button class="engine-btn" data-engine="startpage" onclick="selectEngine('startpage')">Startpage</button>
+            <button class="engine-btn" data-engine="google" onclick="selectEngine('google')">Google</button>
+        </div>
+
+        <div class="search-box-container">
+            <input class="search-box" id="query" type="text" placeholder="Search on Brave ">
+            <button class="submit" onclick="search()">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <h3 class="response">Press Enter or click search to explore the web!</h3>
+    </div>
+
+    <script>
+        let currentEngine = 'brave';
+        
+        const engines = {
+            brave: {
+                url: 'https://search.brave.com/search?q=',
+                placeholder: 'Search with Brave Search'
+            },
+            duckduckgo: {
+                url: 'https://duckduckgo.com/?q=',
+                placeholder: 'Search with DuckDuckGo'
+            },
+            startpage: {
+                url: 'https://www.startpage.com/do/search?q=',
+                placeholder: 'Search with Startpage'
+            },
+            google: {
+                url: 'https://www.google.com/search?q=',
+                placeholder: 'Search with Google'
+            }
+        };
+
+        function selectEngine(engine) {
+            currentEngine = engine;
+
+            // Update active button
+            document.querySelectorAll('.engine-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-engine="${engine}"]`).classList.add('active');
+
+            // Update placeholder
+            document.getElementById('query').placeholder = engines[engine].placeholder;
+        }
+
+        function search() {
+            const query = document.getElementById("query").value;
+            if (query.trim()) {
+                const url = engines[currentEngine].url + encodeURIComponent(query);
+                window.location.href = url;
+            }
+        }
+
+        function animateTitle() {
+            const title = document.querySelector('h1');
+            title.style.transform = 'rotate(360deg) scale(1.1)';
+            setTimeout(() => {
+                title.style.transform = 'scale(1)';
+            }, 600);
+        }
+
+       
+
+        document.getElementById("query").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                search();
+            }
+        });
+
+        window.addEventListener('load', function() {
+            document.getElementById('query').focus();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[package]
+name = "Quietfox"
+version = "0.1.0"
+edition = "2024"
+authors = ["Deep Narayan Banerjee <deepnarayanbanerjee@gmail.com>"]
+[dependencies]
+wry="0.24"
+tao = "0.16"
+raw-window-handle = "0.6.2"
+fastrand = "2.0"
+url = "2.5"
+image = "0.24"
