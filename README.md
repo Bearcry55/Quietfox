@@ -2,7 +2,8 @@
 
 A lightweight, privacy-focused web browser built with Rust, designed for users who value their privacy and want a clean, distraction-free browsing experience.
 
-![Quietfox Browser](Quietfox.png)
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/213af324-198c-435b-a12a-c43bd62f1038" />
+
 
 ## 🚀 Project Status
 
